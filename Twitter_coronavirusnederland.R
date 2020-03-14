@@ -48,7 +48,7 @@ colnames(tweets_text) <- c("woord")
 tweets_text2 <- tweets_text %>% 
   unnest_tokens(word, woord) 
 
-#Delete stopwords
+#Delete stopwords: two languages because of some EN content
 tweets_text3 <- tweets_text2 %>% 
   anti_join(get_stopwords(language="nl", source="snowball"))%>%
   anti_join(get_stopwords(language="en", source="snowball"))
@@ -61,7 +61,7 @@ tweets_text4 <- tweets_text3 %>%
 tweets_text5 <- tweets_text4 %>%
   slice(-2,-3)
 
-#Delete all input with numbers & two extra entries because of content
+#Delete all input with numbers (non-informative) & two extra entries because of content
 tweets_text6 <- tweets_text5 %>% 
   filter(is.na(as.numeric(word)))%>%
   slice(-45, -50)
